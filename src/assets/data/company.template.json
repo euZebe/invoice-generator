@@ -1,0 +1,11 @@
+{
+  "name": "companyName",
+  "legalInfo": [
+    "9, rue des ornithorynques, 3100O Toulouse",
+    "EURL au capital de 10€",
+    "N° SIRET : 83xxxxxxxxx/ RCS xxxxxx 83xxxxxx / APE : xxxxx",
+    "N° TVA intracommunautaire : FR44 xxxxx",
+    "Tél : 0123456789 / Email : contact@mycompany.com"
+  ],
+  "bankAccount": "FR00 0000 0000 0000 0000 0000 000"
+}

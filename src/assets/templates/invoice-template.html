@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="text-sm space-y-12 flex flex-col h-[27cm]">
+
+<div class="font-bold text-lg">{{company.name}}</div>
+<div class="flex flex-row justify-between">
+  <div class="flex flex-col">
+    <div class="font-bold text-lg">Facture n°{{invoiceNumber}}</div>
+    <div>Date de facturation : {{invoiceDate}}</div>
+    {{#client.contractRef}}
+    <div class="font-bold text-gray-600">Référence contrat: {{client.contractRef}}</div>
+    {{/client.contractRef}}
+  </div>
+
+  <div class="flex flex-col pr-12">
+    <h2 class="font-bold pb-2">{{client.name}}</h2>
+    {{#client.address}}
+    <div>{{.}}</div>
+    {{/client.address}}
+    <div>{{client.vatNumber}}</div>
+  </div>
+</div>
+
+<table class="min-w-full">
+  <thead>
+    <tr class="uppercase border-t border-b border-gray">
+      <th class="py-3.5 text-xs text-left">description</th>
+      <th class="py-3.5 text-xs text-right">quantité</th>
+      <th class="py-3.5 text-xs text-right">unité</th>
+      <th class="py-3.5 text-xs text-right">prix unitaire</th>
+      <th class="py-3.5 text-xs text-right">total HT</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#sales}}
+    <tr>
+      <td class="text-left">
+        <div class="flex flex-col py-2">
+          {{#description}}
+          <div>{{.}}</div>
+          {{/description}}
+        </div>
+      </td>
+      <td class="text-right">{{amount}}</td>
+      <td class="text-right">{{unit}}</td>
+      <td class="text-right">{{formattedUnitaryPrice}} {{client.currency}} HT</td>
+      <td class="text-right">{{formattedTotal}} {{client.currency}}</td>
+    </tr>
+    {{/sales}}
+  </tbody>
+</table>
+
+<div class="w-full flex flex-row justify-end">
+  <div class="min-w-0 grid grid-cols-2 gap-2 text-right">
+    <div>Total HT</div>
+    <div>{{beforeTax}} {{client.currency}}</div>
+    <div>Taux de TVA</div>
+    <div>{{vatRate}} %</div>
+    <div class="pb-2">Total TVA</div>
+    <div>{{vatTotal}} {{client.currency}}</div>
+    <div class="font-bold border-t border-gray pt-2">Total TTC à régler</div>
+    <div class="font-bold border-t border-gray pt-2">{{toBePaid}} {{client.currency}}</div>
+  </div>
+</div>
+
+<div class="text-xs py-10 flex-1">
+  <p>La facture est payable à réception.</p>
+  <p>Des pénalités correspondant à trois fois le taux de l’intérêt légal seront applicables en l’absence ou en cas de retard de paiement. Les pénalités de retard sont exigibles sans qu'un rappel soit nécessaire. Une indemnité forfaitaire de 40 € pour frais de recouvrement sera appliquée en cas de retard de paiement conformément aux articles L 441-3 et L 441-6 du code de commerce.</p>
+  <p>Pas d'escompte en cas de paiement anticipé.</p>
+  <p class="pt-2">{{company.bankAccount}}</p>
+</div>
+
+<footer class="text-xs border-t border-t-gray pt-2">
+  <div>{{company.name}}</div>
+  {{#company.legalInfo}}
+  <div>{{.}}</div>
+  {{/company.legalInfo}}
+</footer>
+
+
+</body>
+</html>

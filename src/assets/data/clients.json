@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Pouet",
+    "address": ["chez moi", "rue des fifous", "Argelès-Gazost"],
+    "vatNumber": "FR85111111111",
+    "contractRef": "xx.1186",
+    "currency": "€"
+  }
+]
