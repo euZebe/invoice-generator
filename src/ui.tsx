@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import clients from "./assets/data/clients.json";
 import SelectInput from "ink-select-input";
-import {Box, Text} from "ink";
+import { Box, Text } from "ink";
 import NumberInput from "./component/number-input";
 import Mustache from "mustache";
-import {generateInvoicePdf} from "./generate-invoice";
-import {CompletedFormValues, FormValues} from "./client.model";
+import { generateInvoicePdf } from "./invoice/generate-invoice";
+import { CompletedFormValues, FormValues } from "./client.model";
 import TextInput from "ink-text-input";
-import {format, subDays} from "date-fns";
+import { format, subDays } from "date-fns";
 import Header from "./component/header";
 
 const booleanValues = [
@@ -46,8 +46,6 @@ const App = () => {
       });
     }
   }, [formValues]);
-
-  console.log("outputFilePath", outputFilePath)
 
   return (
     <Box flexDirection="column">
@@ -126,9 +124,7 @@ const App = () => {
             }
           />
         </Box>
-      ) : (
-        <Text>File path:{formValues.filePath}</Text>
-      )}
+      ) : null}
       {outputFilePath ? (
         <Box>
           <Text>File stored to </Text>
