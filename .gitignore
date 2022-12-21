@@ -4,3 +4,4 @@ dist/
 output/
 yarn-error.log
 company.json
+clients.json
