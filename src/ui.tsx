@@ -5,10 +5,10 @@ import { Box, Text } from "ink";
 import NumberInput from "./component/number-input";
 import Mustache from "mustache";
 import { generateInvoicePdf } from "./invoice/generate-invoice";
-import { CompletedFormValues, FormValues } from "./client.model";
-import TextInput from "ink-text-input";
-import { format, subDays } from "date-fns";
+import { format, lastDayOfMonth, subDays } from "date-fns";
 import Header from "./component/header";
+import { CompletedFormValues, FormValues } from "./form-values.model";
+import TextFormInput from "./component/text-form-input";
 
 const booleanValues = [
   { label: "yes", value: "yes" },
@@ -25,13 +25,16 @@ function isFormCompleted(formValues: any): formValues is CompletedFormValues {
     !!formValues.workedDays &&
     !!formValues.client &&
     !!formValues.filePath &&
-    !!formValues.fileName
+    !!formValues.fileName &&
+    !!formValues.invoiceDate
   );
 }
 
 const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [formValues, setFormValues] = useState<FormValues>({});
+  const [formValues, setFormValues] = useState<FormValues>({
+    invoiceDate: format(lastDayOfMonth(new Date()), "dd/MM/yyyy"),
+  });
 
   const update: typeof setFormValues = (value) => {
     setFormValues({ ...formValues, ...value });
@@ -62,10 +65,10 @@ const App = () => {
               update({
                 client,
                 fileName: Mustache.render(
-                  `{{dateMonth}}-facture-{{client.name}}`,
+                  `{{dateMonth}}-facture-{{clientName}}`,
                   {
                     dateMonth: format(subDays(new Date(), 3), "yyyy-MM"),
-                    client,
+                    clientName: client?.name.replaceAll(" ", "_"),
                   }
                 ),
               });
@@ -95,13 +98,21 @@ const App = () => {
         <Text>Price: {formValues.price}</Text>
       )}
       <Box marginRight={1} flexDirection="row">
-        <Text>FileName: </Text>
+        <Text>Invoice date: </Text>
         {currentIndex === 3 ? (
-          <TextInput
-            value={formValues.fileName || ""}
-            onChange={(fileName) =>
-              setFormValues((formValues) => ({ ...formValues, fileName }))
-            }
+          <TextFormInput
+            initialValue={formValues.invoiceDate}
+            onSubmit={(invoiceDate) => update({ invoiceDate })}
+          />
+        ) : (
+          <Text>{formValues.invoiceDate}</Text>
+        )}
+      </Box>
+      <Box marginRight={1} flexDirection="row">
+        <Text>File name: </Text>
+        {currentIndex === 4 ? (
+          <TextFormInput
+            initialValue={formValues.fileName}
             onSubmit={(fileName) => update({ fileName })}
           />
         ) : (
@@ -109,7 +120,7 @@ const App = () => {
         )}
       </Box>
 
-      {currentIndex === 4 ? (
+      {currentIndex === 5 ? (
         <Box marginRight={1} flexDirection="row">
           <Text>Save on nextcloud ? </Text>
           <SelectInput

@@ -1,8 +1,8 @@
 import puppeteer from "puppeteer";
 import fs from "fs/promises";
 import Mustache from "mustache";
-import { CompletedFormValues } from "../client.model";
 import { prepareData } from "./prepare-invoice-data";
+import { CompletedFormValues } from "../form-values.model";
 
 export async function printPDF(html: string) {
   const browser = await puppeteer.launch({ headless: true });
@@ -23,7 +23,7 @@ export async function generateInvoicePdf(
   const invoiceData = prepareData(formValues);
 
   const template = await fs.readFile(
-    __dirname + "/assets/templates/invoice-template.html"
+    __dirname + "/../assets/templates/invoice-template.html"
   );
   const htmlRender = Mustache.render(template.toString(), invoiceData);
   try {

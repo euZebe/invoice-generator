@@ -7,9 +7,7 @@ const Header = () => (
     <Gradient name="rainbow">
       <Text>*************************</Text>
     </Gradient>
-    <Gradient name="summer">
-      <Text>*** Invoice generator ***</Text>
-    </Gradient>
+    <Text>*** Invoice generator ***</Text>
     <Gradient name="rainbow">
       <Text>*************************</Text>
     </Gradient>

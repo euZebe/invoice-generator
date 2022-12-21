@@ -1,8 +1,8 @@
-import { CompletedFormValues } from "../client.model";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import company from "../assets/data/company.json";
 import { lastInvoiceNumber } from "../assets/data/invoice-number.json";
+import { CompletedFormValues } from "../form-values.model";
 
 function getInvoiceNumber(date: Date): string {
   const prefixInvoiceNumber = `${format(date, "yyyy-MM")}-FAC `;
@@ -43,7 +43,7 @@ export function prepareData(formValues: CompletedFormValues) {
   return {
     company,
     invoiceNumber: getInvoiceNumber(date),
-    invoiceDate: format(date, "dd/MM/yyyy"),
+    invoiceDate: formValues.invoiceDate,
     client: formValues.client,
     sales,
     beforeTax: totalBeforeTax.toLocaleString("fr", {
