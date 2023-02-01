@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
 import { fr } from "date-fns/locale";
 import company from "../assets/data/company.json";
 import { lastInvoiceNumber } from "../assets/data/invoice-number.json";
@@ -21,7 +21,7 @@ export function prepareData(formValues: CompletedFormValues) {
       description: [
         "Développement logiciel",
         "Jean Martineau-Figuette (JMA)",
-        format(date, "MMMM yyyy", { locale: fr }),
+        format(addDays(date, -4), "MMMM yyyy", { locale: fr }),
       ],
       amount: formValues.workedDays,
       unit: "jour",

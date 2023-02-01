@@ -5,7 +5,7 @@ import { Box, Text } from "ink";
 import NumberInput from "./component/number-input";
 import Mustache from "mustache";
 import { generateInvoicePdf } from "./invoice/generate-invoice";
-import { format, lastDayOfMonth, subDays } from "date-fns";
+import { addDays, format, lastDayOfMonth, subDays } from "date-fns";
 import Header from "./component/header";
 import { CompletedFormValues, FormValues } from "./form-values.model";
 import TextFormInput from "./component/text-form-input";
@@ -33,7 +33,7 @@ function isFormCompleted(formValues: any): formValues is CompletedFormValues {
 const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [formValues, setFormValues] = useState<FormValues>({
-    invoiceDate: format(lastDayOfMonth(new Date()), "dd/MM/yyyy"),
+    invoiceDate: format(lastDayOfMonth(addDays(new Date(), -4)), "dd/MM/yyyy"),
   });
 
   const update: typeof setFormValues = (value) => {
